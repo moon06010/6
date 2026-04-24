@@ -290,7 +290,7 @@ export default function App() {
                 }}
               >
                 <div className="absolute inset-0 w-full h-full z-10 transition-transform hover:scale-[1.02] duration-300">
-                  <img src={isAltImage && selectedChar.altImage ? selectedChar.altImage : selectedChar.image} alt={selectedChar.codename} className="w-full h-full object-cover object-top mix-blend-multiply opacity-90 transition-opacity duration-300" />
+                  <img src={isAltImage && selectedChar.altImage ? selectedChar.altImage : selectedChar.image} alt={selectedChar.codename} className="w-full h-full object-cover object-[center_30%] md:object-top mix-blend-multiply opacity-90 transition-opacity duration-300" />
                   <div className="absolute inset-0 bg-[url('data:image/svg+xml;utf8,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'1.5\' numOctaves=\'2\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\' opacity=\'0.03\'/%3E%3C/svg%3E')] mix-blend-overlay"></div>
                 </div>
               </div>
