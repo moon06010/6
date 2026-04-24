@@ -57,7 +57,7 @@ const TEAMS = [
     ] as Character[]
   },
   {
-    name: "STIGMATA",
+    name: "STIGMA",
     members: [
       { 
         codename: "아스널", codenameEng: "ARSENAL", realName: "리카르도 로드리게스 / Ricardo Rodriguez", id: "STI-01", type: "SENTINEL", rank: "RANK S", role: "LEADER",
@@ -113,6 +113,14 @@ const TEAMS = [
     ] as Character[]
   }
 ];
+
+// Helper for Team Badge Styling Colors
+const getTeamBadgeInfo = (id: string) => {
+  if (id.startsWith('CAL')) return { name: 'CALIX', style: 'bg-[#8c7ae6] text-white border-[#8c7ae6]' }; // Soft Purple
+  if (id.startsWith('STI')) return { name: 'STIGMA', style: 'bg-[#d35400] text-white border-[#d35400]' }; // Pumpkin
+  if (id.startsWith('ORA')) return { name: 'ORACLE', style: 'bg-[#1abc9c] text-white border-[#1abc9c]' }; // Turquoise
+  return null;
+};
 
 // Helper for Nationality Styling Colors
 const getNatColor = (nat: string) => {
@@ -314,6 +322,11 @@ export default function App() {
                 </div>
                 
                 <div className="flex flex-wrap gap-2 mb-8 items-center">
+                  {getTeamBadgeInfo(selectedChar.id) && (
+                    <span className={`px-2 py-0.5 text-[10px] font-mono tracking-widest border ${getTeamBadgeInfo(selectedChar.id)?.style}`}>
+                      {getTeamBadgeInfo(selectedChar.id)?.name}
+                    </span>
+                  )}
                   <span className={`px-2 py-0.5 text-[10px] font-mono tracking-widest border ${selectedChar.type === 'SENTINEL' ? 'bg-[#121212] text-[#fdfcfb] border-[#121212]' : 'bg-[#f4f2ee] text-[#121212] border-[#dcd8ce]'}`}>
                     {selectedChar.type}
                   </span>
