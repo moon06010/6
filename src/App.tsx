@@ -71,7 +71,7 @@ const TEAMS = [
         comment: "야생마 같은 스티그마 팀원들의 목줄을 쥔 얼음장 같은 완벽주의 부관.", image: "https://joimage.uk/aq/z/6.webp" 
       },
       { 
-        codename: "바이퍼", codenameEng: "VIPER", realName: "네이트 S. 윌슨 / Nate Sebastian Wilson", id: "STI-03", type: "SENTINEL", rank: "RANK A", role: "MAIN DEALER",
+        codename: "바이퍼", codenameEng: "VIPER", realName: "네이트 S. 윌슨 / Nate S. Wilson", id: "STI-03", type: "SENTINEL", rank: "RANK A", role: "MAIN DEALER",
         ability: "BEAST TRANSFORMATION", abilityDesc: "뱀으로 변신하여 독으로 상대를 공격한다.", 
         age: "27", nat: ["AUS"], natLabel: "AUS", birthday: "03/29", bloodType: "RH-B", physical: "190cm / 89kg", mbti: "ESFP", 
         comment: "퇴폐적인 쾌락으로 내면의 ???를 달래는 구제 불능의 양아치.", image: "https://joimage.uk/aq/z/7.webp" 
@@ -88,7 +88,7 @@ const TEAMS = [
     name: "ORACLE",
     members: [
       { 
-        codename: "이클립스", codenameEng: "ECLIPSE", realName: "로렌초 L. 비스콘티 / Lorenzo Ludovico Visconti", id: "ORA-01", type: "SENTINEL", rank: "RANK S", role: "LEADER",
+        codename: "이클립스", codenameEng: "ECLIPSE", realName: "로렌초 L. 비스콘티 / Lorenzo L. Visconti", id: "ORA-01", type: "SENTINEL", rank: "RANK S", role: "LEADER",
         ability: "SHADOW MANIPULATION", abilityDesc: "어둠과 그림자를 조종하여 다양한 무기를 만들거나 상대의 기척을 읽는다. 상대를 속박할 수 있다.", 
         age: "63", nat: ["ITA"], natLabel: "ITA", birthday: "12/01", bloodType: "RH+O", physical: "199cm / 100kg", mbti: "INFJ", 
         comment: "오라클을 이끄는 자애로운 맹인 사제.", image: "https://joimage.uk/aq/z/9.webp" 
@@ -282,15 +282,15 @@ export default function App() {
               onClick={(e) => e.stopPropagation()}
               className="bg-[#fdfcfb] border border-[#dcd8ce] max-w-3xl w-full shadow-2xl relative flex flex-col md:flex-row overflow-hidden cursor-default max-h-[90vh]"
             >
-              {/* Left Image Arch in Modal */}
+              {/* Left Image in Modal */}
               <div 
-                className={`w-full md:w-[40%] bg-[#f4f2ee] p-4 md:p-8 flex items-center justify-center border-b md:border-b-0 md:border-r border-[#dcd8ce] relative shrink-0 ${selectedChar.altImage ? 'cursor-pointer' : ''}`}
+                className={`w-full aspect-square md:aspect-auto md:w-[40%] bg-[#f4f2ee] border-b md:border-b-0 md:border-r border-[#dcd8ce] relative shrink-0 overflow-hidden ${selectedChar.altImage ? 'cursor-pointer' : ''}`}
                 onClick={() => {
                   if (selectedChar.altImage) setIsAltImage(!isAltImage);
                 }}
               >
-                <div className="w-32 sm:w-48 md:w-full aspect-[2/3] rounded-t-full overflow-hidden border border-[#dcd8ce] shadow-inner relative z-10 transition-transform hover:scale-[1.02] duration-300">
-                  <img src={isAltImage && selectedChar.altImage ? selectedChar.altImage : selectedChar.image} alt={selectedChar.codename} className="w-full h-full object-cover mix-blend-multiply opacity-90 transition-opacity duration-300" />
+                <div className="absolute inset-0 w-full h-full z-10 transition-transform hover:scale-[1.02] duration-300">
+                  <img src={isAltImage && selectedChar.altImage ? selectedChar.altImage : selectedChar.image} alt={selectedChar.codename} className="w-full h-full object-cover object-top mix-blend-multiply opacity-90 transition-opacity duration-300" />
                   <div className="absolute inset-0 bg-[url('data:image/svg+xml;utf8,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'1.5\' numOctaves=\'2\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\' opacity=\'0.03\'/%3E%3C/svg%3E')] mix-blend-overlay"></div>
                 </div>
               </div>
