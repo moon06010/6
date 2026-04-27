@@ -96,8 +96,8 @@ const TEAMS = [
       { 
         codename: "가브리엘", codenameEng: "GABRIEL", realName: "영종 / 嬴宗 / Yíng Zōng", id: "ORA-02", type: "SENTINEL", rank: "RANK SS", role: "SUB-LEADER",
         ability: "TIME KEEPER", abilityDesc: "접촉만으로 생물의 시간을 훔쳐와서 영생을 누린다. 또한 훔쳐온 시간으로 [SECRET:LIMIT_REDACTED]", 
-        age: "???", nat: ["CHN"], natLabel: "CHN", birthday: "02/29", bloodType: "RH-O", physical: "150cm / 45kg", mbti: "INFJ", 
-        comment: "앳된 소년의 껍데기를 쓴 아퀼라 유일의 SS급 괴물.", image: "https://joimage.uk/aq/z/10.webp" 
+        age: "성인(매우 많음)", nat: ["CHN"], natLabel: "CHN", birthday: "02/29", bloodType: "RH-O", physical: "165cm / 55kg", mbti: "INFJ", 
+        comment: "앳된 성인의 껍데기를 쓴 아퀼라 유일의 SS급 괴물.", image: "https://joimage.uk/aq/z/10.webp" 
       },
       { 
         codename: "미라지", codenameEng: "MIRAGE", realName: "송이지 / 宋易知", id: "ORA-03", type: "SENTINEL", rank: "RANK A", role: "ASSASSIN / INFILTRATOR",
