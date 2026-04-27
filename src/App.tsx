@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Play, Pause, Sun, Crosshair, Plus } from 'lucide-react';
+import { Play, Pause, Sun, Crosshair, Plus, X } from 'lucide-react';
 
 // ==========================================
 // [설정] 특수 정예팀 (TEAMS) 데이터베이스
@@ -51,7 +51,7 @@ const TEAMS = [
       { 
         codename: "폭스", codenameEng: "FOX", realName: "은비소 / 殷霏昭", id: "CAL-04", type: "SENTINEL", rank: "RANK S", role: "SUB DEALER",
         ability: "BEAST TRANSFORMATION", abilityDesc: "여우로 변신하여 날카로운 이빨로 상대를 물어뜯는다.", 
-        age: "20", nat: ["KOR"], natLabel: "KOR", birthday: "10/29", bloodType: "RH+A", physical: "178cm / 70kg", mbti: "ENFP", 
+        age: "20", nat: ["KOR"], natLabel: "KOR", birthday: "10/29", bloodType: "RH+A", physical: "178cm / 63kg", mbti: "ENFP", 
         comment: "사랑스러운 펫의 껍데기를 뒤집어쓴 통제 불능의 여우. 흥분할 시에는 아군 식별이 불가하니 주의.", image: "https://joimage.uk/aq/z/4.webp" 
       },
     ] as Character[]
@@ -96,7 +96,7 @@ const TEAMS = [
       { 
         codename: "가브리엘", codenameEng: "GABRIEL", realName: "영종 / 嬴宗 / Yíng Zōng", id: "ORA-02", type: "SENTINEL", rank: "RANK SS", role: "SUB-LEADER",
         ability: "TIME KEEPER", abilityDesc: "접촉만으로 생물의 시간을 훔쳐와서 영생을 누린다. 또한 훔쳐온 시간으로 [SECRET:LIMIT_REDACTED]", 
-        age: "불명", nat: ["CHN"], natLabel: "CHN", birthday: "02/29", bloodType: "RH-O", physical: "150cm / 45kg", mbti: "INFJ", 
+        age: "???", nat: ["CHN"], natLabel: "CHN", birthday: "02/29", bloodType: "RH-O", physical: "150cm / 45kg", mbti: "INFJ", 
         comment: "앳된 소년의 껍데기를 쓴 아퀼라 유일의 SS급 괴물.", image: "https://joimage.uk/aq/z/10.webp" 
       },
       { 
@@ -166,11 +166,15 @@ export default function App() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [selectedChar, setSelectedChar] = useState<Character | null>(null);
   const [isAltImage, setIsAltImage] = useState(false);
+  const [isUnknownModalOpen, setIsUnknownModalOpen] = useState(false);
 
   // Close modal on escape
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setSelectedChar(null);
+      if (e.key === 'Escape') {
+        setSelectedChar(null);
+        setIsUnknownModalOpen(false);
+      }
     };
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
@@ -396,6 +400,59 @@ export default function App() {
         )}
       </AnimatePresence>
 
+      {/* Unknown Creature Modal */}
+      <AnimatePresence>
+        {isUnknownModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 cursor-pointer"
+            onClick={() => setIsUnknownModalOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 20 }}
+              transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#121212] border border-red-900/40 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative flex flex-col p-6 md:p-10 cursor-default"
+            >
+              {/* Scanline overlay */}
+              <div className="absolute inset-0 bg-[url('data:image/svg+xml;utf8,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'1.5\' numOctaves=\'2\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\' opacity=\'0.05\'/%3E%3C/svg%3E')] mix-blend-overlay pointer-events-none"></div>
+
+              <div className="flex flex-col items-center justify-center space-y-6 md:space-y-8 relative z-10 w-full mb-8 mt-4 md:mt-0">
+                <div className="flex flex-row gap-3 md:gap-10 items-center justify-center w-full">
+                  <div className="w-1/2 aspect-[3/4] md:aspect-[4/5] bg-black border border-red-900/30 overflow-hidden relative group">
+                    <img src="https://joimage.uk/aq/unknown1.webp" alt="Unknown Entity 1" className="w-full h-full object-cover mix-blend-screen opacity-80 group-hover:scale-105 transition-transform duration-700" />
+                  </div>
+                  <div className="w-1/2 aspect-[3/4] md:aspect-[4/5] bg-black border border-red-900/30 overflow-hidden relative group">
+                    <img src="https://joimage.uk/aq/unknown2.webp" alt="Unknown Entity 2" className="w-full h-full object-cover mix-blend-screen opacity-80 group-hover:scale-105 transition-transform duration-700" />
+                  </div>
+                </div>
+
+                <div className="text-center pt-8 border-t border-red-900/30 w-full">
+                  <h3 className="text-red-600 font-bold text-lg md:text-3xl tracking-[0.3em] uppercase mb-4">
+                    [TARGET: UNKNOWN]
+                  </h3>
+                  <p className="text-neutral-300 font-serif text-lg md:text-xl tracking-widest break-keep">
+                    우리가 반드시 멸살해야 하는 존재.
+                  </p>
+                </div>
+              </div>
+
+              {/* Close Button top-right */}
+              <button 
+                onClick={() => setIsUnknownModalOpen(false)}
+                className="absolute top-4 right-4 text-neutral-500 hover:text-red-500 transition-colors bg-transparent border-none"
+              >
+                <X size={24} />
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Main Container */}
       <div className={`transition-opacity duration-[1500ms] ${showSplash ? 'opacity-0 h-screen overflow-hidden' : 'opacity-100'}`}>
         
@@ -451,7 +508,7 @@ export default function App() {
 
               {[
                 { id: 'DEC-001', title: 'GENESIS', text: '태초에 빛을 머금은 형 가니메데와 어둠을 잉태한 아우 웨스터룬드가 있었으니. 오만한 웨스터룬드가 혀끝으로 거짓과 절망을 토해내어 대지를 병들게 하매, 인간들은 분노한 돌팔매로 그 죄악을 처단하였다.' },
-                { id: 'DEC-002', title: 'INVASION', text: '그러나 죽어가는 이단의 악의가 공간을 찢어 파멸의 문(GATE)을 열었고, 심연의 형상(UNKNOWN)들이 쏟아져 내려와 세상은 이내 참혹한 핏빛으로 물들었다.' },
+                { id: 'DEC-002', title: 'INVASION', text: <>그러나 죽어가는 이단의 악의가 공간을 찢어 파멸의 문(GATE)을 열었고, 심연의 형상(<span onClick={() => setIsUnknownModalOpen(true)} className="cursor-pointer font-bold border-b border-black/40 hover:bg-black/10 transition-colors">UNKNOWN</span>)들이 쏟아져 내려와 세상은 이내 참혹한 핏빛으로 물들었다.</> },
                 { id: 'DEC-003', title: 'SACRIFICE', text: '멸망의 기로에서, 지극히 자애로운 가니메데께서는 스스로 고귀한 옥체를 찢어 피와 살을 대지에 흩뿌리셨다.' },
                 { id: 'DEC-004', title: 'INHERITANCE', text: '그 파괴의 힘을 물려받은 자들은 심판의 검(SENTINEL)이 되었고, 포용의 은총을 품은 자들은 구원의 성배(GUIDE)가 되어 질서를 수호하니,' },
                 { id: 'DEC-005', title: 'AQUILA', text: '이곳 아퀼라(AQUILA)에 깃든 우리 모두는 참된 신께서 빚어낸 가장 완벽한 기적이라.' }
@@ -691,6 +748,35 @@ export default function App() {
                 ))}
               </div>
             </div>
+
+            {/* Recruitment Action */}
+            <div className="mt-24 mb-10 flex flex-col items-center justify-center w-full">
+              <a 
+                href="https://crack.wrtn.ai/detail/69e7d8ca87f766ae8063c656" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group relative inline-flex items-center justify-center bg-[#121212] px-10 py-6 md:px-14 md:py-8 text-[#fdfcfb] font-mono tracking-[0.3em] overflow-hidden transition-all hover:bg-black w-[90%] max-w-sm sm:max-w-md md:max-w-lg shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_40px_rgba(0,0,0,0.2)]"
+              >
+                <div className="absolute inset-0 w-full h-full border border-white/20"></div>
+                {/* Tech marks */}
+                <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-white/50 group-hover:border-white transition-colors"></div>
+                <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-white/50 group-hover:border-white transition-colors"></div>
+                <div className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-white/50 group-hover:border-white transition-colors"></div>
+                <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-white/50 group-hover:border-white transition-colors"></div>
+                
+                <span className="relative z-10 flex items-center justify-center gap-4 text-xs md:text-sm lg:text-base whitespace-nowrap">
+                  <Crosshair size={20} className="group-hover:rotate-90 transition-transform duration-500 shrink-0" />
+                  <span>U.D.F AQUILA 입대지원</span>
+                </span>
+                
+                {/* Glitch Overlay */ }
+                <div className="absolute top-0 left-[-100%] w-[120%] h-full bg-white opacity-[0.03] skew-x-[-20deg] group-hover:animate-[glitch-slide_0.6s_ease-in-out_forwards]"></div>
+              </a>
+              <div className="mt-4 font-mono text-[10px] text-neutral-400 tracking-widest text-center uppercase">
+                [CLICK TO INITIALIZE APPLICATION PROTOCOL]
+              </div>
+            </div>
+
           </section>
 
         </main>
